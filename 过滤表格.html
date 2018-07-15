@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Insert title here</title>
+        <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    </head>
+    <style>
+        table,tr,td{
+            border:solid 1px;
+            border-collapse:collapse;
+            text-align:center;
+        }
+    </style>
+    
+    <body>
+                筛选：<input id="filter" type="text"><input type="button" name="OK" value="OK" id="ok">
+        <table>
+            <thead>
+                <tr>
+                    <td>姓名</td>
+                    <td>性别</td>
+                    <td>暂住地</td>
+                </tr>
+            </thead>
+            <tbody class="info">
+                <tr class="child_row_01"><td class="name">张三</td><td>男</td><td>浙江宁波</td></tr>
+                <tr class="child_row_01"><td class="name">三</td><td>男</td><td>浙江宁波</td></tr>
+                
+                <tr class="child_row_02"><td class="name">张三</td><td>男</td><td>宁波</td></tr>
+                <tr class="child_row_02"><td class="name">三</td><td>男</td><td>浙江宁波</td></tr>
+                
+                <tr class="child_row_03"><td class="name">张</td><td>男</td><td>浙江</td></tr>
+                <tr class="child_row_03"><td class="name">三</td><td>男</td><td>浙江宁波</td></tr>
+            </tbody>
+        </table>
+
+    </body>
+    <script type="text/javascript">
+        $(function(){
+            var chy = {};
+            chy.filter = function(){
+            	$('#ok').click(function(){
+            		// 获取输入框值
+            		var val = $('#filter').val();
+            		if (val === '') {
+            			alert('请输入查询条件。。。');
+            			return;
+            		}
+
+            		// 定义一个数据条数
+            		var nameLen = 0;
+            		
+            		// 获取名字对象
+            		var nameObj = $('.name');
+
+            		// 你可以看看获取到的这个对象是什么，object
+            		// console.log(typeof nameObj);
+
+            		// 每次过滤之前将所有元素显示，避免重复过滤导致最后元素清空，你可以尝试注释之后看一下效果
+            		for (var i = 0; i < nameObj.length; i++) {
+            			nameObj.eq(i).parent().show();
+            		}
+            		
+            		// 执行遍历，进行过滤
+            		for (var i = 0; i < nameObj.length; i++) {
+            			if (val !== nameObj.get(i).innerHTML && val !== '') {
+            				
+            				//注意，这里使用get(i)方法获取到的是网页对象，而不是JQuery对象，不能调用JQuery的方法
+            				// console.log(nameObj.get(i));
+            				// 
+            				// 使用eq()方法获取到的是是JQuery对象
+            				// 获取表格一行使用parent()方法
+            				nameObj.eq(i).parent().hide();
+            			}else {
+            				nameLen++;
+            			}
+            		}
+            		// 判断获取到的数据条数是否为零，为零则提示没有数据
+            		if (nameLen === 0) {
+            			$('.info').append('<tr class="warning" style="color: red;"><td colspan="3">没有查询到数据！！！</td></p>');
+
+            		}
+            		// 只保留一行
+            		if($('.warning').length > 1) {
+            			// 找到数据，将警告元素删除，通过类名获取
+            			$('.warning').eq(0).remove();
+            		}
+            	});
+            };
+            chy.filter();
+        });
+    </script>
+</html>
