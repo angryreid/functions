@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>promise</title>
+</head>
+<body>
+	<script>
+		let promise = new Promise(function(resole,reject){
+			console.log('Promise works');
+			resole();
+		});
+
+		promise.then(function(){
+			console.log('resole 1 works');
+		}).then(function(){
+			console.log('resole 2 works');
+		}).then(function(){
+			console.log('resole 3 works');
+		});
+
+		promise.then(function(){
+			console.log('success');
+		},function(){
+			console.log('erroe');
+		})
+
+		console.log('hello world');
+	</script>
+</body>
+</html>
